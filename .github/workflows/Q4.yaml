@@ -1,0 +1,26 @@
+name: Q4 Workflow
+on:
+  push:
+    paths:
+      - Q4.java
+
+jobs:
+  archive-java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Archive Q4.java
+        run: |
+          echo "Matthias Bernouy" > Q4_archive_date.txt
+          echo "$(date +%d-%m-%Y)" >> Q4_archive_date.txt
+          cat Q4.java >> Q4_archive_date.txt
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add Q4_archive_date.txt
+          git commit -m "Added Q4_archive_date.txt"
+          git push
