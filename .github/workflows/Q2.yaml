@@ -1,0 +1,26 @@
+name: Q2 Workflow
+on:
+  push:
+    paths:
+      - README.md
+
+jobs:
+  create-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Q2_archive_README.md
+        run: |
+          echo "Matthias Bernouy" > Q2_archive_README.md
+          echo "$(date)" >> Q2_archive_README.md
+          cat README.md >> Q2_archive_README.md
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add Q2_archive_README.md
+          git commit -m "Added Q2_archive_README.md"
+          git push
