@@ -1,0 +1,25 @@
+name: Q3 Workflow
+on:
+  push:
+    paths:
+      - Q3.java
+
+jobs:
+  archive-java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Archive Q3.java
+        run: |
+          echo "Matthias Bernouy" > Q3_archive_java.txt
+          cat Q3.java >> Q3_archive_java.txt
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add Q3_archive_java.txt
+          git commit -m "Added Q3_archive_java.txt"
+          git push
